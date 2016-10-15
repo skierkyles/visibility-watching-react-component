@@ -1,6 +1,6 @@
 {
   "name": "react-vizibility-watcher",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "A higher order component to watch a components visibility.",
   "repository": {
     "type": "git",
@@ -11,7 +11,7 @@
   "homepage": "http://www.kyleswanson.org/",
   "keywords": [
     "react-component",
-    "react",
+    "react"
   ],
   "scripts": {
     "webpacksample": "webpack sample/dist/index.js --output-file sample/dist/bundle.js",
@@ -29,13 +29,13 @@
     "babel-preset-es2015": "^6.6.0",
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-2": "^6.5.0",
-    "get-visible-rect": "^0.1.2",
     "react": "^15.0.0",
     "react-dom": "^15.0.0"
   },
   "peerDependencies": {
     "react": "~0.14.8 || ^15.0.0",
-    "react-dom": "~0.14.8 || ^15.0.0"
+    "react-dom": "~0.14.8 || ^15.0.0",
+    "get-visible-rect": "^0.1.2"
   },
   "dependencies": {
     "babel-runtime": "^6.6.1"
