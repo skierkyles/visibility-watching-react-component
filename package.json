@@ -1,5 +1,5 @@
 {
-  "name": "react-viz-watcher",
+  "name": "react-vizibility-watcher",
   "version": "0.0.1",
   "description": "A higher order component to watch a components visibility.",
   "repository": {
@@ -8,13 +8,10 @@
   },
   "author": "Kyle Swanson",
   "license": "WTFPL",
-  "bugs": {
-    "url": "https://github.com/juliancwirko/react-npm-boilerplate/issues"
-  },
-  "homepage": "https://github.com/juliancwirko/react-npm-boilerplate",
+  "homepage": "http://www.kyleswanson.org/",
   "keywords": [
     "react-component",
-    "react"
+    "react",
   ],
   "scripts": {
     "webpacksample": "webpack sample/dist/index.js --output-file sample/dist/bundle.js",
