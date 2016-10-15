@@ -1,5 +1,5 @@
-# visibility-watching-react-component
+# react-vizibility-watcher
 An higher order component that watches a components visibility and sets a prop
 
-# demo
+# Demo
 http://www.kyleswanson.org/projects/visibility/
