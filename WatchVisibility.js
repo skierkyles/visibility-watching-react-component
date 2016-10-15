@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {AddVisibilityWatcher, RemoveVisibilityWatcher} from './WatchVisibilityHelpers';
 
 /**
  * Watches an element, and sets a prop 'visibility'.
@@ -9,68 +10,51 @@ import ReactDOM from 'react-dom';
  *
  * export default WatchVisibility(MyFavoriteComponent);
  */
-var WatchVisibility = (ComposedComponent, StopWatchingOnVisible = false, CheckInterval = 300) => class extends React.Component {
+const WatchVisibility = (ComposedComponent, StopWatchingOnVisible = false) => class extends React.Component {
   constructor(props) {
     super(props);
 
+    let visibility = 0;
+
+    if (this.shouldWatch() === false) {
+      visibility = 100;
+    }
+
     this.state = {
-      visibility: 0
+      visibility: visibility
     };
 
-    this.checkInterval = null;
-    this.element = null;
-    this.runLoop = true;
+    this.watcher = null;
   }
 
-  checkVisibility = () => {
-    var rect = this.element.getBoundingClientRect();
-    var containmentRect = {
-      top: 0,
-      left: 0,
-      bottom: window.innerHeight || document.documentElement.clientHeight,
-      right: window.innerWidth || document.documentElement.clientWidth
-    };
+  shouldWatch() {
+    return true;
+  }
 
-    var visibility = 0;
-
-    if (rect.top >= 0 && rect.bottom < containmentRect.bottom) {
-      visibility = 100;
-    } else if (rect.top > containmentRect.bottom) {
-      visibility = 0;
-    } else {
-      visibility = (rect.bottom / containmentRect.bottom) * 100;
+  onVisibilityChange = percentVisible => {
+    if (percentVisible > 0 && StopWatchingOnVisible) {
+      RemoveVisibilityWatcher(this.watcher);
+      percentVisible = 100;
     }
 
-    visibility = Math.max(0, Math.round(visibility));
-    visibility = Math.min(100, visibility);
-
-    if (visibility !== this.state.visibility && this.runLoop) {
-      this.setState({
-        visibility: visibility
-      });
-    }
-
-    if (visibility > 0 && StopWatchingOnVisible) {
-      this.runLoop = false;
-    }
+    this.setState({
+      visibility: percentVisible
+    });
   };
 
-  loop = () => {
-    this.checkVisibility();
-
-    // We may need to rate limit this for performance.
-    if (this.runLoop) {
-      requestAnimationFrame(this.loop);
-    }
-  };
+  shouldComponentUpdate(nextProps, nextState) {
+    return true;
+  }
 
   componentDidMount() {
-    this.element = ReactDOM.findDOMNode(this);
-    this.loop();
+    if (this.shouldWatch()) {
+      const element = ReactDOM.findDOMNode(this);
+      this.watcher = AddVisibilityWatcher(element, this.onVisibilityChange);
+    }
   }
 
   componentWillUnmount() {
-    this.runLoop = false;
+    RemoveVisibilityWatcher(this.watcher);
   }
 
   render() {
