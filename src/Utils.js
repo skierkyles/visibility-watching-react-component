@@ -1,28 +1,15 @@
+import getVisibleRect from 'get-visible-rect';
+
 let _watchedElements = [];
 let _rateLimiter = null;
 
 const checkElement = e => {
-  const rect = e.element.getBoundingClientRect();
-  const containmentRect = {
-    top: 0,
-    left: 0,
-    bottom: window.innerHeight || document.documentElement.clientHeight,
-    right: window.innerWidth || document.documentElement.clientWidth
-  };
+  const visibility = getVisibleRect(e.element);
+  let percent = (visibility.visibleHeight / visibility.height) * 100;
 
-  let visibility = 0;
-  if (rect.top >= 0 && rect.bottom < containmentRect.bottom) {
-    visibility = 100;
-  } else if (rect.top > containmentRect.bottom) {
-    visibility = 0;
-  } else {
-    visibility = (rect.bottom / containmentRect.bottom) * 100;
-  }
-
-  visibility = Math.max(0, Math.round(visibility));
-  visibility = Math.min(100, visibility);
-
-  e.callback(visibility);
+  percent = Math.max(percent, 0);
+  percent = Math.min(100, percent);
+  e.callback(percent);
 };
 
 const checkLoop = () => {
@@ -48,7 +35,7 @@ export const AddVisibilityWatcher = (element, callback) => {
 };
 
 export const RemoveVisibilityWatcher = index => {
-  if (_watchedElements[index] == null) {
+  if (_watchedElements[index] != null) {
     _watchedElements[index].active = false;
   }
 };
