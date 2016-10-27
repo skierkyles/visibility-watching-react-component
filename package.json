@@ -1,6 +1,6 @@
 {
   "name": "react-vizibility-watcher",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A higher order component to watch a components visibility.",
   "repository": {
     "type": "git",
