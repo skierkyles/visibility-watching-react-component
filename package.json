@@ -1,13 +1,13 @@
 {
   "name": "react-vizibility-watcher",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A higher order component to watch a components visibility.",
   "repository": {
     "type": "git",
     "url": "https://github.com/skierkyles/visibility-watching-react-component"
   },
   "author": "Kyle Swanson",
-  "license": "WTFPL",
+  "license": "Unlicense",
   "homepage": "http://www.kyleswanson.org/",
   "keywords": [
     "react-component",
